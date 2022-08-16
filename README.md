@@ -1,83 +1,46 @@
-# astro-project-astronomer
+Overview
+========
 
-Airflow
+Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
 
-What is?
-Apache Airflow is a open source platform to programmatically AUTHOR, SCHEDULE, and MONITOR workflows.
+Project Contents
+================
 
-What a benefit? 
-Dinamic
-Scalable
-Interactive
-Extensible
+Your Astro project contains the following files and folders:
 
-Core Components
+- dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes an example DAG that runs every 30 minutes and simply prints the current date. It also includes an empty 'my_custom_function' that you can fill out to execute Python code.
+- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
+- include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
+- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
+- requirements.txt: Install Python packages needed for your project by adding them to this file. It is empty by default.
+- plugins: Add custom or community plugins for your project to this file. It is empty by default.
+- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
 
-Web sever 
-Scheduler
-Metadata Database
-Executor - How 
-Worker - Where 
+Deploy Your Project Locally
+===========================
 
-Common Architectures
-Single node Architecture (same machine)
+1. Start Airflow on your local machine by running 'astro dev start'.
 
-Multi node (celery) 
+This command will spin up 3 Docker containers on your machine, each for a different Airflow component:
 
-Core Concepts
+- Postgres: Airflow's Metadata Database
+- Webserver: The Airflow component responsible for rendering the Airflow UI
+- Scheduler: The Airflow component responsible for monitoring and triggering tasks
 
-DAGs - Directed acyclic graph 
-Operators - creating task in your DAG
-Three types of operator: Action Operators, Transfer Operators, Sensor Operators;
-Task - Intense of an operator 
-Task Instance - Represents a specific run of a task: DAG + TASK + Point in time
-Dependencies - Specified the relationships
+2. Verify that all 3 Docker containers were created by running 'docker ps'.
 
-Workflows 
-Combination of all concepts 
+Note: Running 'astro dev start' will start your project with the Airflow Webserver exposed at port 8080 and Postgres exposed at port 5432. If you already have either of those ports allocated, you can either stop your existing Docker containers or change the port.
 
-Task Lifecycle 
+3. Access the Airflow UI for your local Airflow project. To do so, go to http://localhost:8080/ and log in with 'admin' for both your Username and Password.
 
-Extras or Providers:
+You should also be able to access your Postgres Database at 'localhost:5432/postgres'.
 
-Extras - All dependencies
-Providers - Operators or hooks
+Deploy Your Project to Astronomer
+=================================
 
+If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://docs.astronomer.io/cloud/deploy-code/
 
-Three ways interactions: 
+Contact
+=======
 
-UI, CLI, Rest API
-
-DAGs View:
-
-Dag; 
-Toggle; Owner; Runs; Schedule; Last Run; Recent Tasks; Actions; Links.
-
-Tree view - check status
-Graph view - check dependencies status
-Gantt view - check how time is spent
-
-CLI Commands:   docker ps
-
-Docker exec -it “” /bin/bash 
-
-Airflow db init 
-Airflow db upgrade
-Airflow db reset
-Airflow webserver
-Airflow schedule 
-Airflow celery worker
-Airflow dags pause
-Airflow dags unpause
-Airflow dags trigger
-Airflow dags trigger -e
-Airflow dags list
-Airflow tasks list
-Airflow tasks test
-Airflow dags backfill
-
- DAG Scheduling
-
-Start date - date os Dags starter scheduling 
-Scheduling - interval  - Parameter of interval
-End date - define finish of scheduling Dags 
+The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support team: https://support.astronomer.io/
